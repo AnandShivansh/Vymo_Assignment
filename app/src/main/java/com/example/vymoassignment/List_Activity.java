@@ -34,12 +34,17 @@ public class List_Activity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<git_class>> call, Response<List<git_class>> response) {
                 List<git_class> res=response.body();
-                ls.setAdapter(new git_adapter(List_Activity.this, -1, res));
+                if(res!=null) {
+                    ls.setAdapter(new git_adapter(List_Activity.this, -1, res));
+                }else
+                {
+                    Toast.makeText(List_Activity.this,"Invalid Repo Name or Owner Name",Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
             public void onFailure(Call<List<git_class>> call, Throwable t) {
-                Toast.makeText(List_Activity.this, "hsfbfbs", Toast.LENGTH_SHORT).show();
+                Toast.makeText(List_Activity.this, "Connection Failed", Toast.LENGTH_SHORT).show();
 
             }
         });

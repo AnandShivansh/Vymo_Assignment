@@ -1,6 +1,7 @@
 package com.example.vymoassignment;
 
 import android.content.Context;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +10,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.TimeZone;
 
 public class git_adapter extends ArrayAdapter {
 
@@ -55,7 +59,18 @@ public class git_adapter extends ArrayAdapter {
         }
         if(created!=null)
         {
-            created.setText(gitclass.getCreated());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+            try {
+                long time = sdf.parse(gitclass.getCreated()).getTime();
+                long now = System.currentTimeMillis();
+                CharSequence ago =
+                        DateUtils.getRelativeTimeSpanString(time, now, DateUtils.MINUTE_IN_MILLIS);
+                created.setText(ago);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
         return view;
     }
