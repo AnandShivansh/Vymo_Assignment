@@ -29,7 +29,7 @@ public class List_Activity extends AppCompatActivity {
         github_client client=retrofit.create(github_client.class);
         String owner = getIntent().getStringExtra("owner_text");
         String repo = getIntent().getStringExtra("repo_text");
-        Call<List<git_class>> call=client.pulls_for_repo("torvalds","linux");
+        Call<List<git_class>> call=client.pulls_for_repo(owner,repo);
         call.enqueue(new Callback<List<git_class>>() {
             @Override
             public void onResponse(Call<List<git_class>> call, Response<List<git_class>> response) {
